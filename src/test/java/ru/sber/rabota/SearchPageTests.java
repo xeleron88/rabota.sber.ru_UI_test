@@ -36,15 +36,15 @@ public class SearchPageTests extends TestBase {
         });
 
         step("Checking for empty vacancies", () -> {
-            searchPage.VacanciesNotNull();
+            searchPage.vacanciesNotNull();
         });
 
         step("Enter a search query and press enter", () -> {
-            searchPage.EnterSearchQuery("frontend");
+            searchPage.enterSearchQuery("frontend");
         });
 
         step("Checking for empty vacancies", () -> {
-            searchPage.VacanciesNotNull();
+            searchPage.vacanciesNotNull();
         });
     }
 
@@ -56,15 +56,15 @@ public class SearchPageTests extends TestBase {
         });
 
         step("Enter the region or city ", () -> {
-            searchPage.EnterLocation("Москва");
+            searchPage.enterLocation("Москва");
         });
 
         step("Select the region or city from the list", () -> {
-            searchPage.SelectLocationFromList("г Москва");
+            searchPage.selectLocationFromList("г Москва");
         });
 
         step("Checking the result for the selected location", () -> {
-            searchPage.CheckResults("г Москва");
+            searchPage.checkResults("г Москва");
         });
 
     }
@@ -77,15 +77,15 @@ public class SearchPageTests extends TestBase {
         });
 
         step("Checking for empty vacancies", () -> {
-            searchPage.VacanciesNotNull();
+            searchPage.vacanciesNotNull();
         });
 
         step("Enter a search query and press enter", () -> {
-            searchPage.EnterSearchQuery("frontend1329873912");
+            searchPage.enterSearchQuery("frontend1329873912");
         });
 
         step("Checking for empty vacancies", () -> {
-            searchPage.VacanciesIsNull();
+            searchPage.vacanciesIsNull();
         });
     }
 

@@ -51,7 +51,7 @@ public class MainPageTests extends TestBase {
         });
 
         step("The result should not return 'Ничего не нашлось' ", () -> {
-            searchPage.VacanciesNotNull();
+            searchPage.vacanciesNotNull();
         });
     }
 
