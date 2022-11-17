@@ -5,8 +5,9 @@ import org.aeonbits.owner.Config;
 @Config.LoadPolicy(Config.LoadType.MERGE)
 @Config.Sources({
         "system:properties",
-        "classpath:config/local.properties",
-        "classpath:config/remote.properties",
+        "classpath:${env}.properties",
+        "file:~/${env}.properties",
+        "file:./${env}.properties"
 })
 public interface ProjectConfig extends Config {
 
@@ -28,5 +29,6 @@ public interface ProjectConfig extends Config {
     @DefaultValue("")
     String remoteDriverUrl();
 
+    @DefaultValue("")
     String videoStorage();
 }
