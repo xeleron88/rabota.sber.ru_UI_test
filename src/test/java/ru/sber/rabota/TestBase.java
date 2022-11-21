@@ -1,39 +1,44 @@
 package ru.sber.rabota;
 
-import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import helpers.Attach;
+import helpers.DriverSettings;
+import helpers.DriverUtils;
+import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import ru.sber.rabota.properties.Property;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import ru.sber.rabota.config.Project;
 
+@ExtendWith({AllureJunit5.class})
 public class TestBase {
 
     @BeforeAll
-    static void configure() {
+    static void beforeAll() {
+        DriverSettings.configure();
+    }
+
+    @BeforeEach
+    public void beforeEach() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("enableVNC", true);
-        capabilities.setCapability("enableVideo", true);
-
-        Configuration.browserCapabilities = capabilities;
-        Configuration.baseUrl = "https://rabota.sber.ru";
-        Configuration.browser = Property.browser();
-        Configuration.browserVersion = Property.browserVersion();
-        Configuration.browserSize = Property.browserSize();
-        if (!Property.remoteUrl().equals("")) {
-            Configuration.remote = Property.remoteUrl();
-        }
     }
 
     @AfterEach
-    void addAttachments() {
-        Attach.screenshotAs("Last screenshot");
-        Attach.pageSource();
-        Attach.browserConsoleLogs();
-        Attach.addVideo();
+    public void afterEach() {
+        String sessionId = DriverUtils.getSessionId();
+
+        Attach.addScreenshotAs("Last screenshot");
+        Attach.addPageSource();
+
+        Attach.addBrowserConsoleLogs();
+
+        Selenide.closeWebDriver();
+
+        if (Project.isVideoOn()) {
+            Attach.addVideo(sessionId);
+        }
     }
 }
